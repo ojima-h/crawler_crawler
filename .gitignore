@@ -26,6 +26,7 @@ db/*.sqlite3
 *.sassc
 .rspec
 .redcar/
+.yardoc/
 .sass-cache
 /config/config.yml
 /config/database.yml
@@ -33,6 +34,7 @@ db/*.sqlite3
 /coverage/
 /db/*.javadb/
 /db/*.sqlite3
+/doc/guides/
 /doc/api/
 /doc/app/
 /doc/features.html
