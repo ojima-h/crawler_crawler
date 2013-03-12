@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
 
   def new
+    return redirect_to '/auth/developer' unless Rails.env.production?
+
     redirect_to '/auth/twitter'
   end
 
