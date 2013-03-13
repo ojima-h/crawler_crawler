@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_many :user_sources
+
   validates :name, presence: true
   attr_accessible :provider, :uid, :name, :email
 
@@ -12,5 +14,4 @@ class User < ActiveRecord::Base
       end
     end
   end
-
 end
