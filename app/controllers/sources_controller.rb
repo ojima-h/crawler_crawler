@@ -1,38 +1,38 @@
 class SourcesController < ApplicationController
   def index
-    @user_sources = current_user.user_sources
+    @sources = current_user.sources
   end
 
   def show
-    @user_source = UserSource.find(params[:id])
+    @source = Source.find(params[:id])
   end
 
   def new
-    @user_source = UserSource.new
+    @source = Source.new
   end
 
   def create
-    user_source = UserSource.new(params[:user_source].slice(:name, :source_class))
-    user_source.user = current_user
-    user_source.save
+    source = Source.new(params[:source].slice(:name, :klass))
+    source.user = current_user
+    source.save
 
-    redirect_to user_source
+    redirect_to source
   end
 
   def edit
-    @user_source = UserSource.find(params[:id])
+    @source = Source.find(params[:id])
   end
 
   def update
-    @user_source = UserSource.find(params[:id])
-    @user_source.update_attributes(params[:user_source].slice(:name, :source_class))
+    @source = Source.find(params[:id])
+    @source.update_attributes(params[:source].slice(:name, :klass))
 
-    redirect_to @user_source
+    redirect_to @source
   end
 
   def destroy
-    @user_source = UserSource.find(params[:id])
-    @user_source.destroy
+    @source = Source.find(params[:id])
+    @source.destroy
 
     redirect_to '/'
   end

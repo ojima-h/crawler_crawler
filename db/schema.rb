@@ -13,16 +13,16 @@
 
 ActiveRecord::Schema.define(:version => 20130313032101) do
 
-  create_table "user_sources", :force => true do |t|
-    t.integer  "user_id",      :null => false
-    t.string   "source_class", :null => false
-    t.string   "name",         :null => false
+  create_table "sources", :force => true do |t|
+    t.integer  "user_id",    :null => false
+    t.string   "klass",      :null => false
+    t.string   "name",       :null => false
     t.string   "param"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
-  add_index "user_sources", ["source_class", "name"], :name => "index_user_sources_on_source_class_and_name", :unique => true
+  add_index "sources", ["klass", "name"], :name => "index_sources_on_klass_and_name", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "name"

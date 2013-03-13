@@ -11,9 +11,9 @@ describe SourceFactory do
 
       expect {
         source = SourceFactory.create( user:         user,
-                                       source_class: 'File',
+                                       klass: 'File',
                                        name:          'test' )
-      }.to change(UserSource, :count).by(1)
+      }.to change(Source, :count).by(1)
     end
   end
 end

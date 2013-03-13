@@ -1,7 +1,7 @@
 require 'json'
 require 'entity'
 
-module Sources
+module Storage
   class File
     include Enumerable
     FilesDir = ::File.expand_path('./db/files')

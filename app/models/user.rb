@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :user_sources
+  has_many :sources
 
   validates :name, presence: true
   attr_accessible :provider, :uid, :name, :email

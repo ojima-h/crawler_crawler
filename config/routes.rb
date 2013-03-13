@@ -6,7 +6,7 @@ CrawlerCrawler::Application.routes.draw do
   match '/signout' => 'sessions#destroy', :as => :signout
   match '/auth/failure' => 'sessions#failure'
 
-  resources :sources, :as => :user_sources
+  resources :sources
 end
 
 

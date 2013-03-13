@@ -4,7 +4,7 @@ describe Entity do
   prepare_source
 
   it 'enumerate entries' do
-    source = Sources::File.new(source_file_name)
+    source = Storage::File.new(source_file_name)
 
     source.should respond_to :to_a
     entity = source.to_a[0]
