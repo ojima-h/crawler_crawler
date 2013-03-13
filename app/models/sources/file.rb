@@ -1,5 +1,5 @@
 require 'json'
-require 'source'
+require 'entity'
 
 module Sources
   class File
@@ -7,7 +7,7 @@ module Sources
     FilesDir = ::File.expand_path('./db/files')
 
     def initialize(path)
-      path = ::File.expand_path(path, FilesDir);
+      path = ::File.expand_path(path + '.json', FilesDir);
 
       @data = open(path, 'r') do |f|
         JSON.parse( f.read )
@@ -15,8 +15,8 @@ module Sources
     end
 
     def each
-      @data.each do |entry|
-        yield Source.new(entry)
+      @data.reverse_each do |entry|
+        yield Entity.new(entry)
       end
     end
   end

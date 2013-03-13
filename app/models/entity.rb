@@ -1,7 +1,7 @@
 require 'date'
 require 'active_support'
 
-class Source
+class Entity
   attr_reader :contents
   attr_reader :created_at
 
