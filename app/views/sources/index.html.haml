@@ -1,0 +1,5 @@
+%div.sources
+  %ul
+    - @user_sources.each do |user_source|
+      %li
+        = "#{user_source.name} : #{user_source.source_class}"
