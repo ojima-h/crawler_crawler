@@ -1,9 +1,14 @@
 module PrepareHelpers
-  def prepare_storage
-    before :all do
-      @file_path = File.expand_path('./db/files/test.json')
+  module Methods
+    def source_file_name
+      'test'
+    end
+    def source_file_path
+      File.expand_path('./db/files/test.json')
+    end
 
-      open @file_path, 'w' do |f|
+    def prepare_storage_file
+      open source_file_path, 'w' do |f|
         f.write <<EOF
 [
   {
@@ -18,13 +23,17 @@ module PrepareHelpers
 EOF
       end
     end
+  end
 
-    after :all do
-      File.unlink @file_path
+  def prepare_storage
+    include Methods
+
+    before :all do
+      prepare_storage_file
     end
 
-    define_method :source_file_name do
-      'test'
+    after :all do
+      File.unlink source_file_path
     end
   end
 end

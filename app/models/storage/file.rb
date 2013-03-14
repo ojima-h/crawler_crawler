@@ -6,8 +6,14 @@ module Storage
     include Enumerable
     FilesDir = ::File.expand_path('./db/files')
 
-    def initialize(path)
-      path = ::File.expand_path(path + '.json', FilesDir);
+    attr_reader :key
+
+    def initialize(key)
+      @key = key
+
+      path = ::File.expand_path(key + '.json', FilesDir);
+
+      raise ErrNotFound unless ::File.exist? path
 
       @data = open(path, 'r') do |f|
         JSON.parse( f.read )
@@ -22,6 +28,10 @@ module Storage
 
     def push
       error 'Storage::File#push is not implemented yet.'
+    end
+
+    def ==(obj)
+      obj.is_a? Storage::File and obj.key == key
     end
   end
 end

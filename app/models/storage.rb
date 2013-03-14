@@ -7,4 +7,6 @@ module Storage
 
     klass.new(key)
   end
+
+  class ErrNotFound < StandardError; end
 end

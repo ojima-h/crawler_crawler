@@ -1,6 +1,15 @@
 require 'spec_helper'
 
 describe SourcesController do
+  include PrepareHelpers::Methods
+
+  before :all do
+    prepare_storage_file
+  end
+  after :all do
+    File.unlink source_file_path
+  end
+
   before :each do
     @user = FactoryGirl.create(:user)
     @source = FactoryGirl.create(:source, user_id: @user.id)
@@ -26,6 +35,7 @@ describe SourcesController do
     it "assigns user's source" do
       get 'show', id: @source.id
       assigns(:source).should eq Source.find(@source.id)
+      assigns(:storage).should eq @source.storage
     end
   end
 
