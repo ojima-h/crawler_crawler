@@ -6,9 +6,6 @@ describe SourcesController do
   before :all do
     prepare_storage_file
   end
-  after :all do
-    File.unlink source_file_path
-  end
 
   before :each do
     @user = FactoryGirl.create(:user)
@@ -56,10 +53,6 @@ describe SourcesController do
       new_source.should_not be_nil
     end
 
-    after :all do
-      f = './db/files/test_new.json'
-      File.unlink f if File.exist? f
-    end
   end
 
   describe '#edit' do

@@ -1,10 +1,11 @@
 module PrepareHelpers
   module Methods
-    def source_file_name
-      'test'
-    end
     def source_file_path
-      File.expand_path('./db/files/test.json')
+      File.expand_path("./db/files/test_#{storage_key}.json")
+    end
+
+    def storage_key
+      'test'
     end
 
     def prepare_storage_file
@@ -25,15 +26,19 @@ EOF
     end
   end
 
+  module Matchers
+    RSpec::Matchers.define :be_a_storage_key do
+      match do |key|
+        File.exist? "./db/files/test_#{key.to_s}.json"
+      end
+    end
+  end
+
   def prepare_storage
     include Methods
 
     before :all do
       prepare_storage_file
-    end
-
-    after :all do
-      File.unlink source_file_path
     end
   end
 end

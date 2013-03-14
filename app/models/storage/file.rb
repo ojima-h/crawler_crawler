@@ -8,7 +8,10 @@ module Storage
 
     attr_reader :key
 
-    def self.create(key)
+    def self.create
+      t = Time.now
+      key = t.to_i.to_s + t.usec.to_s
+
       open(source_file_path(key), 'w') do |f|
         f.write <<EOF
 [
@@ -47,7 +50,7 @@ EOF
 
     private
     def self.source_file_path(key)
-      ::File.expand_path(key + '.json', FilesDir);
+      ::File.expand_path("#{Rails.env}_#{key}.json", FilesDir);
     end
   end
 end

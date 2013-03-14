@@ -3,6 +3,6 @@
 FactoryGirl.define do
   factory :source do
     name         "test"
-    storage_key  { name }
+    storage_key  { Storage.create.key }
   end
 end

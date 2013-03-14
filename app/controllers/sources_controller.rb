@@ -21,7 +21,7 @@ class SourcesController < ApplicationController
     name  = params[:source][:name]
     key   = name
 
-    storage = Storage.create(name)
+    storage = Storage.create
     return redirect_to :new_source, :notice => 'Failed to create storage' unless storage
 
     source = Source.new(name: name)

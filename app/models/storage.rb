@@ -1,20 +1,10 @@
 module Storage
   def self.open(key, type: 'File')
-    supported_type = %w[ File ]
-    raise "type #{type} is not supported" unless supported_type.include? type
-
-    klass = eval("Storage::#{type}")
-
-    klass.new(key)
+    "Storage::#{type}".constantize.new(key)
   end
 
-  def self.create(key, type: 'File')
-    supported_type = %w[ File ]
-    raise "type #{type} is not supported" unless supported_type.include? type
-
-    klass = eval("Storage::#{type}")
-
-    klass.create(key)
+  def self.create(type: 'File')
+    "Storage::#{type}".constantize.create
   end
 
   class ErrNotFound < StandardError; end
