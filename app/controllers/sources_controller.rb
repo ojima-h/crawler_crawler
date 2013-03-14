@@ -14,6 +14,7 @@ class SourcesController < ApplicationController
   def create
     source = Source.new(params[:source].slice(:name, :klass))
     source.user = current_user
+    source.storage_key  = params[:source][:name]
     source.save
 
     redirect_to source
