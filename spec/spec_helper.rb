@@ -53,8 +53,6 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner[:active_record].clean
     DatabaseCleaner[:mongoid].clean
-
-    Dir[Rails.root.join("db/files/test*")].each {|f| File.unlink f}
   end
 
   config.extend(StorageHelper)

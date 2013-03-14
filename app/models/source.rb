@@ -3,7 +3,9 @@ class Source < ActiveRecord::Base
   attr_accessible :name
 
   def storage
-    Storage.open(storage_key)
+    Storage.find(storage_key)
+  rescue Mongoid::Errors::DocumentNotFound
+    raise Storage::ErrNotFound
   end
 end
 

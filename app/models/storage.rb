@@ -1,19 +1,29 @@
-module Storage
-  def self.open(key)
-    Mongo.find(key)
-  rescue Mongoid::Errors::DocumentNotFound
-    raise ErrNotFound
+class Storage
+  include Mongoid::Document
+  include Enumerable
+
+  field :data, default: []
+
+  def each
+    data.reverse_each do |d|
+      yield Entity.new d
+    end
   end
 
-  def self.create
-    Mongo.create(data: [])
+  def push(item)
+    data.push item
+    save
   end
 
-  def self.exists?(key)
-    Mongo.find(key)
+  def key
+    id.to_s
+  end
+
+  def self.has_key?(key)
+    find(key)
   rescue Mongoid::Errors::DocumentNotFound
     nil
   end
 
-  class ErrNotFound < StandardError; end
+  ErrNotFound = Mongoid::Errors::DocumentNotFound
 end

@@ -3,9 +3,8 @@ require 'spec_helper'
 describe Storage do
   describe '.open' do
     context 'when storage file already exists' do
-      prepare_storage
       it 'instansiate object from storage key' do
-        storage = Storage.open(storage_key)
+        storage = FactoryGirl.create :storage
         storage.should respond_to :each, :push
       end
     end
@@ -13,7 +12,7 @@ describe Storage do
     context 'when storage does not exists' do
       it "raise error Storage::ErrNotFound'" do
         expect {
-          storage = Storage.open('dummy')
+          storage = Storage.find('dummy')
         }.to raise_error Storage::ErrNotFound
       end
     end
@@ -22,7 +21,7 @@ describe Storage do
   describe '.create' do
     it 'create file and instansiate' do
       storage = Storage.create
-      Storage.should be_exists storage.key
+      Storage.should be_has_key storage.key
     end
   end
 end
