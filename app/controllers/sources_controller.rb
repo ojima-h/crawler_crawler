@@ -5,12 +5,10 @@ class SourcesController < ApplicationController
 
   def show
     @source = Source.find(params[:id])
+    @storage = @source.storage
 
-    begin
-      @storage = @source.storage
-    rescue Storage::ErrNotFound
-      return redirect_to :sources, notice: 'Error occurred'
-    end
+  rescue Storage::ErrNotFound
+    redirect_to :sources, notice: 'Error occurred'
   end
 
   def new

@@ -28,7 +28,7 @@ describe SourcesController do
     it "assigns user's source" do
       get 'show', id: @source.id
       assigns(:source).should eq Source.find(@source.id)
-      assigns(:storage).should eq @source.storage
+      assigns(:storage).key.should eq @source.storage.key
     end
   end
 
