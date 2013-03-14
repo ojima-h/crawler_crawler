@@ -8,10 +8,21 @@ module Storage
 
     attr_reader :key
 
+    def self.create(key)
+      open(source_file_path(key), 'w') do |f|
+        f.write <<EOF
+[
+]
+EOF
+      end
+
+      new(key)
+    end
+
     def initialize(key)
       @key = key
 
-      path = ::File.expand_path(key + '.json', FilesDir);
+      path = self.class.source_file_path(key)
 
       raise ErrNotFound unless ::File.exist? path
 
@@ -32,6 +43,11 @@ module Storage
 
     def ==(obj)
       obj.is_a? Storage::File and obj.key == key
+    end
+
+    private
+    def self.source_file_path(key)
+      ::File.expand_path(key + '.json', FilesDir);
     end
   end
 end

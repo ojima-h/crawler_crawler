@@ -21,9 +21,7 @@ describe Storage do
 
   describe '.create' do
     it 'create file and instansiate' do
-      pending 'wait'
-
-      storage = Storage.open('test')
+      storage = Storage.create('test')
       File.should be_exist './db/files/test.json'
     end
   end
