@@ -1,5 +1,5 @@
 module PrepareHelpers
-  def prepare_source
+  def prepare_storage
     before :all do
       @file_path = File.expand_path('./db/files/test.json')
 

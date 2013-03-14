@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Entity do
-  prepare_source
+  prepare_storage
 
   it 'enumerate entries' do
     source = Storage::File.new(source_file_name)

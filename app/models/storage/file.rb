@@ -19,5 +19,9 @@ module Storage
         yield Entity.new(entry)
       end
     end
+
+    def push
+      error 'Storage::File#push is not implemented yet.'
+    end
   end
 end

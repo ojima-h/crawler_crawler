@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Source do
-  prepare_source
+  prepare_storage
 
   describe '#source' do
     it 'inflate Storage::Base subclass from @klass and @name' do
