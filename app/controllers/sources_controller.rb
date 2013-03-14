@@ -12,12 +12,19 @@ class SourcesController < ApplicationController
   end
 
   def create
-    source = Source.new(params[:source].slice(:name, :klass))
-    source.user = current_user
-    source.storage_key  = params[:source][:name]
-    source.save
+    name  = params[:source][:name]
+    klass = 'File'
+    key   = name
 
-    redirect_to source
+    source = Source.new(name: name, klass: klass)
+    source.user = current_user
+    source.storage_key  = key
+
+    if source.save
+      redirect_to source
+    else
+      redirect_to :new_source, :notice => 'Failed to create source'
+    end
   end
 
   def edit
@@ -26,9 +33,12 @@ class SourcesController < ApplicationController
 
   def update
     @source = Source.find(params[:id])
-    @source.update_attributes(params[:source].slice(:name, :klass))
 
-    redirect_to @source
+    if @source.update_attributes(params[:source].slice(:name))
+      redirect_to @source
+    else
+      redirect_to edit_source_path(@source)
+    end
   end
 
   def destroy

@@ -38,7 +38,7 @@ describe SourcesController do
 
   describe '#create' do
     it 'redirect when success' do
-      post 'create', :source => { name: 'test_new', klass: 'File' }
+      post 'create', :source => { name: 'test_new' }
 
       new_source = Source.where(name: 'test_new').first
 
@@ -61,7 +61,7 @@ describe SourcesController do
   describe '#update' do
     it 'redirect when success' do
       put 'update', :id => @source.id,
-                    :source => { :name => 'test_mod', klass: 'File' }
+                    :source => { :name => 'test_mod' }
       response.should redirect_to @source
       @source = Source.find(@source.id)
       @source.name.should eq 'test_mod'

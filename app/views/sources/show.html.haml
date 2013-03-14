@@ -1,7 +1,5 @@
-%div
-  %ul
-    %li
-      = "source class : #{@source.klass}"
-    %li
-      = "name : #{@source.name}"
-  
+%h4= @source.name
+
+%ul
+  - @source.storage.each do |item|
+    %li= item.contents

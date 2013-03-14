@@ -1,8 +1,6 @@
 = form_for(@source) do |f|
   = f.label      :name
   = f.text_field :name
-  = f.label  :klass
-  = f.select :klass, sources_class_list
   %br/
   = f.submit "Save"
 
