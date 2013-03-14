@@ -13,6 +13,8 @@ gem "omniauth", ">= 1.1.3"
 gem "omniauth-twitter"
 gem "simple_form", ">= 2.0.4"
 gem "figaro", ">= 0.5.3"
+gem "mongoid"
+gem "bson_ext"
 
 gem "binding_of_caller", ">= 0.7.1", :group => :development, :platforms => [:mri_19, :rbx]
 gem "quiet_assets", ">= 1.0.1", :group => :development
