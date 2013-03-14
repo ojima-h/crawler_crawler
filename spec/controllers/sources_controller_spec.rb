@@ -55,6 +55,11 @@ describe SourcesController do
       new_source = Source.where(name: 'test_new').first
       new_source.should_not be_nil
     end
+
+    after :all do
+      f = './db/files/test_new.json'
+      File.unlink f if File.exist? f
+    end
   end
 
   describe '#edit' do
