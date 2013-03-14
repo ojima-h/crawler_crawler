@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Storage do
-  include PrepareHelpers::Matchers
-
   describe '.open' do
     context 'when storage file already exists' do
       prepare_storage
@@ -24,14 +22,7 @@ describe Storage do
   describe '.create' do
     it 'create file and instansiate' do
       storage = Storage.create
-      storage.key.should be_a_storage_key
+      Storage.should be_exists storage.key
     end
   end
 end
-
-
-
-
-
-
-

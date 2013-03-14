@@ -1,11 +1,7 @@
 require 'spec_helper'
 
 describe SourcesController do
-  include PrepareHelpers::Methods
-
-  before :all do
-    prepare_storage_file
-  end
+  prepare_storage
 
   before :each do
     @user = FactoryGirl.create(:user)

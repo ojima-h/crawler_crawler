@@ -57,6 +57,6 @@ RSpec.configure do |config|
     Dir[Rails.root.join("db/files/test*")].each {|f| File.unlink f}
   end
 
-  config.extend(PrepareHelpers)
+  config.extend(StorageHelper)
   config.include(FeaturesHelpers)
 end
