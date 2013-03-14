@@ -24,5 +24,10 @@ describe Storage do
       storage = Storage.create('test')
       File.should be_exist './db/files/test.json'
     end
+
+    after :all do
+      f = './db/files/test.json'
+      File.unlink f if File.exist? f
+    end
   end
 end

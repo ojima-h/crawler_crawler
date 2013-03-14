@@ -43,13 +43,16 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner[:active_record].strategy = :truncation
+    DatabaseCleaner[:mongoid].strategy = :truncation
   end
   config.before(:each) do
-    DatabaseCleaner.start
+    DatabaseCleaner[:active_record].start
+    DatabaseCleaner[:mongoid].start
   end
   config.after(:each) do
-    DatabaseCleaner.clean
+    DatabaseCleaner[:active_record].clean
+    DatabaseCleaner[:mongoid].clean
   end
 
   config.extend(PrepareHelpers)
