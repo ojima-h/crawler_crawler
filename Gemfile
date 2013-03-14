@@ -27,3 +27,7 @@ gem "factory_girl_rails", ">= 4.2.0", :group => [:development, :test]
 gem "better_errors", ">= 0.6.0", :group => :development
 gem "hub", ">= 1.10.2", :require => nil, :group => [:development]
 gem 'RedCloth', '~> 4.2'
+
+group :developmet, :test do
+  gem "mongoid-rspec"
+end
