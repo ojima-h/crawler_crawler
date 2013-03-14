@@ -1,10 +1,9 @@
 class Source < ActiveRecord::Base
   belongs_to :user
-  attr_accessible :name, :klass
+  attr_accessible :name
 
   def storage
-    @klass ||= eval "Storage::#{klass}"
-    @core  ||= @klass.new(name)
+    Storage.open(storage_key)
   end
 end
 

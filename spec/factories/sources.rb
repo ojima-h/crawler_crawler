@@ -2,7 +2,6 @@
 
 FactoryGirl.define do
   factory :source do
-    klass "File"
     name         "test"
     storage_key  { name }
   end

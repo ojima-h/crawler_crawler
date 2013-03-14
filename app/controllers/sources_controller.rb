@@ -13,10 +13,9 @@ class SourcesController < ApplicationController
 
   def create
     name  = params[:source][:name]
-    klass = 'File'
     key   = name
 
-    source = Source.new(name: name, klass: klass)
+    source = Source.new(name: name)
     source.user = current_user
     source.storage_key  = key
 

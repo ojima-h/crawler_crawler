@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(:version => 20130313032101) do
 
   create_table "sources", :force => true do |t|
     t.integer  "user_id",     :null => false
-    t.string   "klass",       :null => false
     t.string   "name",        :null => false
     t.string   "storage_key", :null => false
     t.string   "param"

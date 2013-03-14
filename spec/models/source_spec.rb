@@ -4,7 +4,7 @@ describe Source do
   prepare_storage
 
   describe '#source' do
-    it 'inflate Storage::Base subclass from @klass and @name' do
+    it 'inflate Storage::Base subclass from @name' do
       user = FactoryGirl.create(:user)
       source = FactoryGirl.create(:source, user_id: user.id)
 
