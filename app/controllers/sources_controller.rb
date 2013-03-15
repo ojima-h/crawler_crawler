@@ -17,12 +17,8 @@ class SourcesController < ApplicationController
 
   def create
     name  = params[:source][:name]
-    key   = name
 
-    source = Source.new(name: name)
-    source.user = current_user
-
-    if source.save
+    if source = SourceFactory.create(name: name, user: current_user)
       redirect_to source
     else
       redirect_to :new_source, :notice => 'Failed to create source'
