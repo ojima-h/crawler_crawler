@@ -1,6 +1,6 @@
 module CrawlStrategy
   module None
-    def fetch(**params)
+    def self.fetch(**params)
     end
   end
 end

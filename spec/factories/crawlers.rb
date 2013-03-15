@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :crawler do
     user_id { FactoryGirl.create(:user).id }
     name 'test'
-    key  'test'
+    storage_key  'test'
 
     strategy 'None'
     params   { {p: 1, q: 2} }

@@ -1,22 +1,35 @@
 class Crawler
   include Mongoid::Document
 
-  field :user_id  , type: Integer
-  field :name     , type: String
-  field :key      , type: String
+  attr_accessible :name, :params
 
-  field :strategy , type: String
-  field :params   , type: Hash
+  field :user_id     , type: Integer
+  field :name        , type: String
+  field :storage_key , type: String
+  field :strategy    , type: String
+  field :params      , type: Hash
 
-  validates :user_id  , presence: true
-  validates :name     , presence: true, uniqueness: true
-  validates :key      , presence: true
-  validates :strategy , presence: true
+  validates :user_id     , presence: true
+  validates :name        , presence: true
+  validates :storage_key , presence: true
+  validates :strategy    , presence: true
 
   def fetch
     klass = "CrawlStrategy::#{strategy}".classify.constantize
-    klass.fetch **params
-  rescue NameError
-    nil
+
+    data = klass.fetch params
+    storage.push data
+  # rescue NameError
+  #   nil
+  end
+
+  def storage
+    Storage.find(storage_key)
+  end
+
+  def self.notify
+    self.each {|crawler|
+      crawler.fetch
+    }
   end
 end
