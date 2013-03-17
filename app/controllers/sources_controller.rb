@@ -12,7 +12,7 @@ class SourcesController < ApplicationController
   end
 
   def new
-    @source = Source.new
+    @source = SourceFactory.new
   end
 
   def create

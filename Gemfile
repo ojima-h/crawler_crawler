@@ -34,5 +34,3 @@ group :developmet, :test do
   gem "mongoid-rspec"
   gem "debugger"
 end
-
-gem "pry-rails"

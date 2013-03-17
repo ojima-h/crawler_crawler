@@ -1,14 +1,10 @@
 module SourcesHelper
   class Factory
-    def self.create(user: nil, **params)
-      name     = params[:name]     || 'test'
-      strategy = params[:strategy] || 'Test'
-      _params  = params[:params]   || {}
-
+    def self.create(user: nil, name: 'test', strategy: 'Test', params: {})
       SourceFactory.create(user:             user,
                            name:             name,
                            crawler_strategy: strategy,
-                           **_params)
+                           params:           params)
     end
   end
 end
