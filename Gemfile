@@ -33,4 +33,5 @@ gem 'googleajax'
 group :developmet, :test do
   gem "mongoid-rspec"
   gem "debugger"
+  gem "spork-rails"
 end
