@@ -82,4 +82,24 @@ describe SourceFactory do
       source.name.should eq s.name
     end
   end
+
+  describe '#destroy' do
+    it 'destroy Source and Storage and Crawler' do
+      source = FactoryGirl.create(:source_factory)
+
+      strategy = source.crawler_strategy
+
+      source.destroy
+      source.persisted?.should be_false
+
+      Crawler.where(strategy: strategy).count.should eq 0
+    end
+  end
 end
+
+
+
+
+
+
+

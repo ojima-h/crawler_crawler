@@ -4,8 +4,7 @@ class SourceFactory
   extend ActiveModel::Naming
   include ActiveModel::Conversion
 
-  attr_accessor :user, :name, :crawler_strategy, :params
-  attr_reader   :errors, :id, :source, :crawler, :storage
+  attr_reader :errors, :id, :source, :crawler, :storage
 
   class << self
     def create(name: nil, user: nil, crawler_strategy: 'None', params: {})
@@ -20,14 +19,11 @@ class SourceFactory
     def find(id)
       source = new
       source.instance_eval do |obj|
-        @id = id
-        @source = Source.find(@id)
-        @storage = Storage.find(@source.storage_key)
+        @source  = Source.find  (id)
+        @storage = Storage.find (@source.storage_key)
         @crawler = Crawler.where(storage_key: @storage.key).first
 
-        @name = @source.name
-        @crawler_strategy = @crawler.strategy
-        @params = @crawler.params
+        @id = id
         @new_record = false
       end
       source
@@ -35,13 +31,45 @@ class SourceFactory
   end
 
   def initialize(name: nil, crawler_strategy: 'None', params: {})
-    @name = name
-    @crawler_strategy = crawler_strategy
-    @params = params
+    @source  = Source.new(name: name)
+    @storage = Storage.new
+    @crawler = Crawler.new(name: name, params: params)
+
+    @crawler.strategy = crawler_strategy
 
     @errors = ActiveModel::Errors.new(self)
     @new_record = true
     @id = nil
+  end
+
+  #
+  # accessors
+  #
+  def name
+    @source.name
+  end
+  def name=(n)
+    @source.name = n
+    @crawler.name = n
+  end
+  def user
+    @source.user
+  end
+  def user=(u)
+    @source.user = u
+    @crawler.user_id = u.id
+  end
+  def crawler_strategy
+    @crawler.strategy
+  end
+  def crawler_strategy=(s)
+    @crawler.strategy = s
+  end
+  def params
+    @crawler.params
+  end
+  def params=(p)
+    @crawler.params = p
   end
 
   def new_record?
@@ -49,7 +77,12 @@ class SourceFactory
   end
 
   def save
-    new_record? ? create : update
+    if new_record?
+      create
+    else
+      @crawler.save
+      @source.save
+    end
   end
 
   def save!
@@ -57,38 +90,39 @@ class SourceFactory
   end
 
   def persisted?
-    ! @new_record
+    ! (@new_record || @destroyed)
   end
 
-  def update_attributes(name: nil, params: nil)
-    self.name   = name   if name
-    self.params = params if params
+  def destroy
+    @storage.destroy if @storage
+    @crawler.destroy if @crawler
+    @source.destroy  if @source
+
+    @destroyed = true
+
+    self
+  end
+
+  def update_attributes(attributes)
+    self.name   = attributes[:name]   if attributes.has_key? :name
+    self.params = attributes[:params] if attributes.has_key? :params
 
     self.save
   end
 
   private
   def update
-    if not self.name == @source.name
-      @source.name  = name
-      @crawler.name = name
-      @source.save and @crawler.save
-    end
+    @source.save and @crawler.save
   end
 
   def create
-    @storage ||= Storage.create
+    @storage.save!
 
-    @crawler ||= Crawler.create!(name: @name, params: params) {|c|
-      c.user_id     = @user.id
-      c.strategy    = @crawler_strategy
-      c.storage_key = @storage.key
-    }
+    @crawler.storage_key = @storage.key
+    @crawler.save!
 
-    @source ||= Source.create!(name: @name) {|s|
-      s.user_id     = @user.id
-      s.storage_key = @storage.key
-    }
+    @source.storage_key = @storage.key
+    @source.save!
 
     @new_record = false
     @id      = @source.id

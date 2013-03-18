@@ -29,7 +29,7 @@ class SourcesController < ApplicationController
   end
 
   def update
-    @source = Source.find(params[:id])
+    @source = SourceFactory.find(params[:id])
 
     if @source.update_attributes(params[:source].slice(:name))
       redirect_to @source
@@ -39,7 +39,7 @@ class SourcesController < ApplicationController
   end
 
   def destroy
-    @source = Source.find(params[:id])
+    @source = SourceFactory.find(params[:id])
     @source.destroy
 
     redirect_to '/'
