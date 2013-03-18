@@ -27,8 +27,7 @@ describe SourcesController do
     end
     it "assigns user's source" do
       get 'show', id: @source.id
-      assigns(:source).should eq Source.find(@source.id)
-      assigns(:storage).key.should eq @source.storage.key
+      assigns(:source).name.should eq SourceFactory.find(@source.id).name
     end
   end
 
@@ -58,7 +57,7 @@ describe SourcesController do
     end
     it "assigns user's source" do
       get 'edit', id: @source.id
-      assigns(:source).should eq Source.find(@source.id)
+      assigns(:source).name.should eq SourceFactory.find(@source.id).name
     end
   end
 

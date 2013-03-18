@@ -4,8 +4,7 @@ class SourcesController < ApplicationController
   end
 
   def show
-    @source = Source.find(params[:id])
-    @storage = @source.storage
+    @source = SourceFactory.find(params[:id])
 
   rescue Storage::ErrNotFound
     redirect_to :sources, notice: 'Error occurred'
@@ -26,7 +25,7 @@ class SourcesController < ApplicationController
   end
 
   def edit
-    @source = Source.find(params[:id])
+    @source = SourceFactory.find(params[:id])
   end
 
   def update

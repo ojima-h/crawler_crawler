@@ -42,6 +42,13 @@ describe SourceFactory do
       source.user = @user
       source.save.should be_false
     end
+
+    it 'update when record is persisted'do
+      source = FactoryGirl.create(:source_factory)
+      source.name = 'new_name'
+      source.save.should be_true
+      SourceFactory.find(source.id).name.should eq source.name
+    end
   end
 
   describe '#persisted?' do
