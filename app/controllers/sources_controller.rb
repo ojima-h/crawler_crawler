@@ -15,9 +15,13 @@ class SourcesController < ApplicationController
   end
 
   def create
-    name  = params[:source][:name]
+    attributes = {}
+    params[:source].slice(:name, :crawler_strategy).each do |k, v|
+      attributes[k.to_sym] = v
+    end
+    attributes[:user] = current_user
 
-    if source = SourceFactory.create(name: name, user: current_user)
+    if source = SourceFactory.create(**attributes)
       redirect_to source
     else
       redirect_to :new_source, :notice => 'Failed to create source'
@@ -30,8 +34,12 @@ class SourcesController < ApplicationController
 
   def update
     @source = SourceFactory.find(params[:id])
+    attributes = {}
+    params[:source].slice(:name, :crawler_strategy).each do |k, v|
+      attributes[k.to_sym] = v
+    end
 
-    if @source.update_attributes(params[:source].slice(:name))
+    if @source.update_attributes(**attributes)
       redirect_to @source
     else
       redirect_to edit_source_path(@source)

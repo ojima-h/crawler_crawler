@@ -47,7 +47,13 @@ describe SourcesController do
       new_source = Source.where(name: 'test_new').first
       new_source.should_not be_nil
     end
+    it 'could specify crawler strategy' do
+      post 'create', :source => { name: 'test_new', crawler_strategy: 'Test'}
 
+      id = Source.last.id
+      new_source = SourceFactory.find(id)
+      new_source.crawler_strategy.should eq "Test"
+    end
   end
 
   describe '#edit' do
@@ -68,6 +74,14 @@ describe SourcesController do
       response.should redirect_to @source
       @source = Source.find(@source.id)
       @source.name.should eq 'test_mod'
+    end
+    it 'could update crawler strategy' do
+      put 'update', :id => @source.id,
+                    :source => { :name => 'test_mod',
+                                 :crawler_strategy => 'None' }
+
+      @source = SourceFactory.find(@source.id)
+      @source.crawler_strategy.should eq 'None'
     end
   end
 

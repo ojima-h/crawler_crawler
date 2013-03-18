@@ -105,6 +105,7 @@ class SourceFactory
 
   def update_attributes(attributes)
     self.name   = attributes[:name]   if attributes.has_key? :name
+    self.crawler_strategy   = attributes[:crawler_strategy]   if attributes.has_key? :crawler_strategy
     self.params = attributes[:params] if attributes.has_key? :params
 
     self.save
