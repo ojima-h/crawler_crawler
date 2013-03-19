@@ -1,3 +1,5 @@
+require 'date'
+
 class Storage
   include Mongoid::Document
   include Enumerable
@@ -11,7 +13,9 @@ class Storage
   end
 
   def push(item)
-    data.push item
+    now = DateTime.now.to_s
+
+    data.push({contents: item, created_at: now})
     save
   end
 
