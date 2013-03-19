@@ -15,11 +15,13 @@ class SourcesController < ApplicationController
   end
 
   def create
-    attributes = {}
-    params[:source].slice(:name, :crawler_strategy).each do |k, v|
-      attributes[k.to_sym] = v
-    end
+    p = params[:source].symbolize_keys
+    attributes = p.slice(:name, :crawler_strategy)
     attributes[:user] = current_user
+
+    if p.has_key?(:params) and p[:params].has_key?(attributes[:crawler_strategy])
+      attributes[:params] = p[:params][attributes[:crawler_strategy]]
+    end
 
     if source = SourceFactory.create(**attributes)
       redirect_to source
@@ -33,10 +35,12 @@ class SourcesController < ApplicationController
   end
 
   def update
+    p = params[:source].symbolize_keys
     @source = SourceFactory.find(params[:id])
-    attributes = {}
-    params[:source].slice(:name, :crawler_strategy).each do |k, v|
-      attributes[k.to_sym] = v
+    attributes = p.slice(:name, :crawler_strategy)
+
+    if p.has_key?(:params) and p[:params].has_key?(attributes[:crawler_strategy])
+      attributes[:params] = p[:params][attributes[:crawler_strategy]]
     end
 
     if @source.update_attributes(**attributes)

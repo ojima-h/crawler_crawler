@@ -103,6 +103,13 @@ class SourceFactory
     self
   end
 
+  def attributes
+    { name:             self.name,
+      crawler_strategy: self.crawler_strategy,
+      params:           self.params,
+    }
+  end
+
   def update_attributes(attributes)
     self.name   = attributes[:name]   if attributes.has_key? :name
     self.crawler_strategy   = attributes[:crawler_strategy]   if attributes.has_key? :crawler_strategy

@@ -1,7 +1,1 @@
-= form_for(@source) do |f|
-  = f.label      :name
-  = f.text_field :name
-  = f.label :crawler_strategy
-  = f.select :crawler_strategy, ['None', 'Test']
-  %br/
-  = f.submit "Save"
+= render 'form'

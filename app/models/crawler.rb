@@ -1,4 +1,14 @@
 class Crawler
+  class CrawlerParam < Hash
+    def self.demongoize(object)
+      if object.is_a? Hash
+        object.symbolize_keys!
+      else
+        object
+      end
+    end
+  end
+
   include Mongoid::Document
 
   attr_accessible :name, :params
@@ -7,7 +17,7 @@ class Crawler
   field :name        , type: String
   field :storage_key , type: String
   field :strategy    , type: String
-  field :params      , type: Hash
+  field :params      , type: CrawlerParam
 
   validates :user_id     , presence: true
   validates :name        , presence: true
@@ -23,6 +33,10 @@ class Crawler
   #   nil
   end
 
+  def params_type
+    klass.params_type
+  end
+
   def storage
     Storage.find(storage_key)
   end
@@ -32,4 +46,22 @@ class Crawler
       crawler.fetch
     }
   end
+
+  def self.strategies
+    [ CrawlStrategy::None,
+      CrawlStrategy::Test,
+      CrawlStrategy::Google ]
+  end
+
+  def has_strategy?(strategy)
+    strategy == klass
+  end
+
+  private
+  def klass
+    @klass ||= "CrawlStrategy::#{strategy}".classify.constantize
+  end
+
 end
+
+

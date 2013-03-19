@@ -47,12 +47,13 @@ describe SourcesController do
       new_source = Source.where(name: 'test_new').first
       new_source.should_not be_nil
     end
-    it 'could specify crawler strategy' do
-      post 'create', :source => { name: 'test_new', crawler_strategy: 'Test'}
+    it 'could specify crawler strategy with params' do
+      post 'create', :source => { name: 'test_new', crawler_strategy: 'Test', params: {'Test' => {'p' => 4}} }
 
       id = Source.last.id
       new_source = SourceFactory.find(id)
       new_source.crawler_strategy.should eq "Test"
+      new_source.params[:p].should eq '4'
     end
   end
 

@@ -1,0 +1,15 @@
+= form_for(@source) do |f|
+  = f.label      :name
+  = f.text_field :name
+
+  = f.label :crawler_strategy
+  = f.select :crawler_strategy, Crawler.strategies.map {|s| s.to_param}
+
+  %div#source_crawler_params{data: @source.attributes}
+    - Crawler.strategies.each do |strategy|
+      %div{id: "source_crawler_params_#{strategy.to_param}", style: "display:#{@source.crawler.has_strategy?(strategy) ? 'display' : 'none'}"}
+        = crawler_strategy_field(@source.crawler, strategy, namespace: ['source', 'params'])
+
+  %br/
+  = f.submit "Save"
+
