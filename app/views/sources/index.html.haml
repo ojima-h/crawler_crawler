@@ -3,3 +3,5 @@
     - @sources.each do |source|
       %li
         = link_to "#{source.name}", source
+        = link_to edit_source_path(source) do
+          %i.icon-pencil

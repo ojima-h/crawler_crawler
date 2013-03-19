@@ -20,12 +20,13 @@ describe Crawler do
     it 'stores fetched data to storage' do
       crawler = @source.crawler
 
-      c = Storage.find(crawler.storage_key).count
-      crawler.fetch
-      Storage.find(crawler.storage_key).count.should eq (c+1)
+      expect { crawler.fetch; @source.storage.reload }.to change(@source.storage, :count).by(1)
     end
 
     it 'does not push if no data fetched' do
+      source = FactoryGirl.create(:source_factory, crawler_strategy: 'None')
+
+      expect { source.crawler.fetch; source.storage.reload }.not_to change(source.storage, :count)
     end
   end
 

@@ -2,6 +2,8 @@
 %ul.nav
   - if user_signed_in?
     %li
+      = link_to 'Sources', sources_path
+    %li
       Logged in as #{current_user.name}
     %li
       = link_to 'Logout', signout_path

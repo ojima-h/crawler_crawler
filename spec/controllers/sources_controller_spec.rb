@@ -92,9 +92,14 @@ describe SourcesController do
       id = source.id
 
       delete 'destroy', :id => source.id
-      response.should redirect_to '/'
+      response.should redirect_to sources_path
 
       expect { Source.find(id) }.to raise_error ActiveRecord::RecordNotFound
     end
   end
 end
+
+
+
+
+

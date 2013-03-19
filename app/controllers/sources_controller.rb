@@ -54,6 +54,6 @@ class SourcesController < ApplicationController
     @source = SourceFactory.find(params[:id])
     @source.destroy
 
-    redirect_to '/'
+    redirect_to sources_path
   end
 end

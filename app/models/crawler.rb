@@ -28,9 +28,7 @@ class Crawler
     klass = "CrawlStrategy::#{strategy}".classify.constantize
 
     data = klass.fetch params
-    storage.push data
-  # rescue NameError
-  #   nil
+    storage.push data if data
   end
 
   def params_type
