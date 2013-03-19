@@ -2,4 +2,4 @@
   %ul
     - @sources.each do |source|
       %li
-        = "#{source.name}"
+        = link_to "#{source.name}", source

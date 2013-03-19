@@ -17,5 +17,9 @@ module CrawlStrategy
     def self.to_param
       'Google'
     end
+
+    def self.fetch(**params)
+      "google search with '#{params}'"
+    end
   end
 end
