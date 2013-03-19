@@ -5,7 +5,7 @@ describe SourcesController do
 
   before :each do
     @user = FactoryGirl.create(:user)
-    @source = SourcesHelper::Factory.create(user: @user)
+    @source = FactoryGirl.create(:source_factory, user: @user)
     session[:user_id] = @user.id
   end
 
@@ -88,7 +88,7 @@ describe SourcesController do
 
   describe '#destroy' do
     it 'redirect when success' do
-      source = SourcesHelper::Factory.create(name: 'test_del', user: @user)
+      source = FactoryGirl.create(:source_factory, name: 'test_del', user: @user)
       id = source.id
 
       delete 'destroy', :id => source.id

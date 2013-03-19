@@ -6,7 +6,7 @@ FactoryGirl.define do
     name 'test'
     storage_key  'test'
 
-    strategy 'None'
+    strategy 'Test'
     params   { {p: 1, q: 2} }
   end
 end

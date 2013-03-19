@@ -6,7 +6,7 @@ describe User do
   describe '#source' do
     it 'inflate Storage::Base subclass from @name of Source' do
       user = FactoryGirl.create(:user)
-      source = SourcesHelper::Factory.create(user: user)
+      source = FactoryGirl.create(:source_factory, user: user)
     end
   end
 end

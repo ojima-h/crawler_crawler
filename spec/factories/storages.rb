@@ -2,7 +2,9 @@
 
 FactoryGirl.define do
   factory :storage, :class => 'Storage' do
-    data [ { "contents" => "foo", "created_at" => "2013/01/10 12:10" } ,
-           { "contents" => "bar", "created_at" => "2013/01/11 13:10" } ]
+    after(:create) do |storage|
+      storage.push 'foo'
+      storage.push 'bar'
+    end
   end
 end

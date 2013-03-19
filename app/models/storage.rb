@@ -4,19 +4,18 @@ class Storage
   include Mongoid::Document
   include Enumerable
 
-  field :data, default: []
+  embeds_many :entities
+
+  delegate :count, to: :entities
 
   def each
-    data.reverse_each do |d|
-      yield Entity.new d
-    end
+    entities.reverse_each {|d| yield d }
   end
 
   def push(item)
     now = DateTime.now.to_s
 
-    data.push({contents: item, created_at: now})
-    save
+    entities.create(contents: item, created_at: now)
   end
 
   def key
